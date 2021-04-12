@@ -33,9 +33,21 @@ router.get('/', async (req, res, next) => {
 
 //Get one phone data
 
-router.get('/4', (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
   try {
-    res.send('Hello World! One phone');
+    
+    const _id = req.params.id;
+    const phone = await Phone.findOne({ _id });
+
+    if (!phone) {
+      const err = new Error('Phone Not found');
+      err.status = 404;
+      next(err);
+      return;
+    }
+
+    res.json(phone);
+
   } catch (err) {
     next(err);
   }
@@ -53,9 +65,17 @@ router.post('/', (req, res, next) => {
 
 //Update phone
 
-router.put('/4', (req, res, next) => {
+router.put('/:id', async (req, res, next) => {
   try {
-    res.send('Update phone');
+    const _id = req.params.id;
+    const phoneDataUpdate = req.body;
+
+    const phoneUpdated = await Phone.findOneAndUpdate({ _id }, phoneDataUpdate, {
+      new: true,
+      useFindAndModify: false,
+    });
+
+    res.status(200).json(phoneUpdated);
   } catch (err) {
     next(err);
   }
@@ -63,12 +83,18 @@ router.put('/4', (req, res, next) => {
 
 //Delete phone
 
-router.delete('/4', (req, res, next) => {
-  try {
-    res.send('Delete phone');
-  } catch (err) {
-    next(err);
-  }
+router.delete('/:id', async (req, res, next) => {
+  
+  try{
+
+        const _id = req.params.id;
+        await Phone.deleteOne({ _id });
+        res.json();
+
+    } catch(err){
+        
+        next(err);
+    }
 });
 
 module.exports = router;
