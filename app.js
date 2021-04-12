@@ -7,6 +7,14 @@ const port = process.env.PORT || 9000;
 const path = require('path');
 const cors = require('cors');
 
+/**
+ * If you want set DB connection only in session website,
+ * you must create a middleware app.use(session({})) and you can save data like cookie,
+ * name session, store connectDB....
+ */
+// connect to the database:
+require('./config/connectDB');
+
 app.use(cors());
 app.use(express.static(path.join(__dirname, 'public')));
 
