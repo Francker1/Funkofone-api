@@ -6,6 +6,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=production node ./app",
     "dev": "cross-env NODE_ENV=development nodemon ./app",
+    "install:db": "node ./database/install_db.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "npx eslint /**/*.js",
     "lint:fix": "npx eslint /**/*.js --fix"

@@ -1,0 +1,54 @@
+[
+  {
+    "name": "iPhone 11",
+    "model": "MHDK3QL/A",
+    "manufacturer": "Apple",
+    "detail": "Apple iPhone 11 128GB (PRODUCT)RED Sin Accesorios móvil libre",
+    "price": 739,
+    "photo": "default.jpg",
+    "ram": "16 GB",
+    "size": "15.09 cm",
+    "screen": "4,7 inch IPS",
+    "processor": "Chip A13 Bionic",
+    "color": "red"
+  },
+  {
+    "name": "Redmi Note 9T",
+    "model": "MZB084OEU",
+    "manufacturer": "Xiaomi",
+    "detail": "Xiaomi Redmi Note 9T 5G 4 GB + 128 GB Daybreak Purple móvil libre",
+    "price": 229.9,
+    "photo": "default.jpg",
+    "ram": "4 GB",
+    "size": "22.5 cm",
+    "screen": "6,53\" FHD+ DotDisplay y Dual speakers",
+    "processor": "MediaTek Dimensity 800U con dual 5G",
+    "color": "purple"
+  },
+  {
+    "name": "Galaxy A32",
+    "model": "SM-A326BZBVEUB",
+    "manufacturer": "Samsung",
+    "detail": "Samsung Galaxy A32 5G 4 GB + 128 GB Azul móvil libre",
+    "price": 259.9,
+    "photo": "default.jpg",
+    "ram": "4 GB",
+    "size": "25.5 cm",
+    "screen": "6,5 HD+",
+    "processor": "Octa Core MTK D720 Dual Core",
+    "color": "green"
+  },
+  {
+    "name": "OPPO Find X3",
+    "model": "5991348",
+    "manufacturer": "Oppo",
+    "detail": "Oppo Find X3 Pro 12 GB + 256 GB Negro móvil libre",
+    "price": 1169.9,
+    "photo": "default.jpg",
+    "ram": "12 GB",
+    "size": "16.36 cm",
+    "screen": "6,7\" OLED",
+    "processor": "Qualcomm Snapdragon 888 Mobile Platform",
+    "color": "black"
+  }
+]
