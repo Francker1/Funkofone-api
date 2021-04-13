@@ -85,8 +85,15 @@ router.post('/', upload.single('image'), async (req, res, next) => {
 
     //get data from body request
     const phoneDataCreate = req.body;
+    let file = req.file;
+    let fileName;
 
-    const photoName = req.file.filename || 'default.jpg';
+    //controls if image not set, save default
+    if (typeof file === 'undefined') {
+      fileName = 'default.jpg';
+    }
+
+    const photoName = fileName || file.filename;
     const photoUrl = `${url}:${port}/img/phones/${photoName}`;
 
     phoneDataCreate.image = photoUrl;
