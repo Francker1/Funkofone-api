@@ -30,6 +30,7 @@
         ],
         "import/extensions": [
             "off"
-        ]
+        ],
+        "no-param-reassign": 0
     }
 }

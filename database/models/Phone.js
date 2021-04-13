@@ -33,7 +33,7 @@ const phoneSchema = mongoose.Schema({
     type: String,
     required: [true, 'Color is required'],
   },
-  photo: String,
+  image: String,
   ram: String,
   size: String,
   screen: String,
