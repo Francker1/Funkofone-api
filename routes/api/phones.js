@@ -1,11 +1,17 @@
 const express = require('express');
 const router = express.Router();
 
+const multer = require('multer');
+
+const port = process.env.PORT;
+const url = process.env.SITE_URL || 'http://localhost';
+
 /**
  * load phone model
  */
 const Phone = require('../../database/models/Phone');
 
+//GET /apiv1/phones/
 //Get all phone data
 
 router.get('/', async (req, res, next) => {
@@ -26,12 +32,14 @@ router.get('/', async (req, res, next) => {
     const phones = await Phone.find(filters);
 
     res.json(phones);
+
   } catch (err) {
     next(err);
   }
 });
 
-//Get one phone data
+//GET /apiv1/phones/:id
+//search phone by ID
 
 router.get('/:id', async (req, res, next) => {
   try {
@@ -39,6 +47,8 @@ router.get('/:id', async (req, res, next) => {
     const _id = req.params.id;
     const phone = await Phone.findOne({ _id });
 
+
+    //if ypu want return a error message
     if (!phone) {
       const err = new Error('Phone Not found');
       err.status = 404;
@@ -53,19 +63,54 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
+
+//POST /apiv1/phones
 //Create phone
 
-router.post('/', (req, res, next) => {
+//upload files to folder img
+const storage = multer.diskStorage({
+  destination(req, file, cb) {
+    cb(null, './public/img/phones');
+  },
+  filename(req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
+const upload = multer({ storage });
+
+router.post('/', upload.single('image'), async (req, res, next) => {
+
+
   try {
-    res.send('Create phone');
+
+    //get data from body request
+    const phoneDataCreate = req.body;
+
+    const photoName = req.file.filename || 'default.jpg';
+    const photoUrl = `${url}:${port}/img/phones/${photoName}`;
+
+    phoneDataCreate.image = photoUrl;
+
+    //set model with phone data
+    const phone = new Phone(phoneDataCreate);
+
+    //save in BD
+    const phoneSave = await phone.save();
+
+    //if is ok, response code 201 - created
+    res.status(201).json(phoneSave);
+
   } catch (err) {
     next(err);
   }
 });
 
-//Update phone
 
-router.put('/:id', async (req, res, next) => {
+//PUT /apiv1/phones/:id 
+//Update phone by ID. You must pass data in body
+
+router.put('/:id', upload.single('image'), async (req, res, next) => {
+
   try {
     const _id = req.params.id;
     const phoneDataUpdate = req.body;
@@ -76,12 +121,16 @@ router.put('/:id', async (req, res, next) => {
     });
 
     res.status(200).json(phoneUpdated);
+
   } catch (err) {
     next(err);
   }
+
 });
 
-//Delete phone
+
+// DELETE /apiv1/phones/:id 
+//Delete phone by ID
 
 router.delete('/:id', async (req, res, next) => {
   
@@ -96,5 +145,6 @@ router.delete('/:id', async (req, res, next) => {
         next(err);
     }
 });
+
 
 module.exports = router;
