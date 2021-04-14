@@ -1,4 +1,5 @@
 'use strict';
+require('dotenv').config();
 
 const mongoose = require('mongoose');
 const connectDB = mongoose.connection;
@@ -23,7 +24,7 @@ connectDB.on('error', (err) => {
 /**
  * This is the connection with DB, you must pass this object in params to avoid Mongoose warnings
  */
-mongoose.connect('mongodb://localhost:27017/funkofone', {
+mongoose.connect(process.env.MONGO_DB_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });

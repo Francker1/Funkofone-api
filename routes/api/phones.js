@@ -167,6 +167,9 @@ router.post('/', upload.single('image'), async (req, res, next) => {
  *      produces:
  *         - application/json
  *      parameters:
+ *         - in: path
+ *           name: id
+ *           description: ID of phone in model
  *         - in: body
  *           name: phone info
  *           description: The phone data to update
