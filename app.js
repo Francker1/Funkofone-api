@@ -26,7 +26,7 @@ app.use(
 app.use(express.urlencoded({ extended: false }));
 
 app.get('/', (req, res) => {
-  res.send('Funk-o-Fone API');
+  res.send('<h2>Funk-o-Fone API</h2><p>This can be a page whit presentation of API</p><a href="./api-docs">Go to API Docs</a>');
 });
 
 app.listen(port, () => {
