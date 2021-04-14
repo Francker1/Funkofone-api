@@ -37,6 +37,7 @@ app.listen(port, () => {
  * API routes:
  */
 app.use('/apiv1/phones', require('./routes/api/phones'));
+app.use('/api-docs', require('./routes/api-docs/phones'));
 
 /**
  * control if the API url starts with /apiv1/

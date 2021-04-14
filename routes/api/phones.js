@@ -11,9 +11,33 @@ const url = process.env.SITE_URL || 'http://localhost';
  */
 const Phone = require('../../database/models/Phone');
 
-//GET /apiv1/phones/
-//Get all phone data
 
+//upload files to folder img
+const storage = multer.diskStorage({
+  destination(req, file, cb) {
+    cb(null, './public/img/phones');
+  },
+  filename(req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
+const upload = multer({ storage });
+
+
+/**
+ * @swagger
+ * /apiv1/phones:
+ *  get:
+ *      summary: Get all Phones
+ *      description: Use to request all phones created
+ *      produces:
+ *         - application/json
+ *      responses:
+ *       200:
+ *         description: Return array object whit phones data
+ *         schema:
+ *         type: json
+ */
 router.get('/', async (req, res, next) => {
   try {
     //get name if you can filter-search by name for example
@@ -38,9 +62,25 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-//GET /apiv1/phones/:id
-//search phone by ID
 
+/**
+ * @swagger
+ * /apiv1/phones/{id}:
+ *  get:
+ *      summary: Get Phone by ID
+ *      description: Use to request an phone by ID
+ *      produces:
+ *         - application/json
+ *      parameters:
+ *         - in: path
+ *           name: id
+ *           description: ID of phone in model
+ *      responses:
+ *       200:
+ *         description: rReturn a Phone by ID
+ *         schema:
+ *         type: json
+ */
 router.get('/:id', async (req, res, next) => {
   try {
     
@@ -64,20 +104,25 @@ router.get('/:id', async (req, res, next) => {
 });
 
 
-//POST /apiv1/phones
-//Create phone
 
-//upload files to folder img
-const storage = multer.diskStorage({
-  destination(req, file, cb) {
-    cb(null, './public/img/phones');
-  },
-  filename(req, file, cb) {
-    cb(null, file.originalname);
-  },
-});
-const upload = multer({ storage });
-
+/**
+ * @swagger
+ * /apiv1/phones:
+ *  post:
+ *      summary: Create Phone
+ *      description: Use this request to create a new phone. The image, in this documentation, will set in default
+ *      produces:
+ *         - application/json
+ *      parameters:
+ *         - in: body
+ *           name: phone info
+ *           description: The phone data to create
+ *           schema:
+ *               $ref: '#/definitions/Phone'
+ *      responses:
+ *       201:
+ *         description: Phone Created!
+ */
 router.post('/', upload.single('image'), async (req, res, next) => {
 
 
@@ -113,9 +158,24 @@ router.post('/', upload.single('image'), async (req, res, next) => {
 });
 
 
-//PUT /apiv1/phones/:id 
-//Update phone by ID. You must pass data in body
-
+/**
+ * @swagger
+ * /apiv1/phones/{id}:
+ *  put:
+ *      summary: Update Phone by ID
+ *      description: Use this request to update a phone searched by ID. The image, in this documentation, will set in default
+ *      produces:
+ *         - application/json
+ *      parameters:
+ *         - in: body
+ *           name: phone info
+ *           description: The phone data to update
+ *           schema:
+ *               $ref: '#/definitions/Phone'
+ *      responses:
+ *       200:
+ *         description: Phone Updated!
+ */
 router.put('/:id', upload.single('image'), async (req, res, next) => {
 
   try {
@@ -136,9 +196,24 @@ router.put('/:id', upload.single('image'), async (req, res, next) => {
 });
 
 
-// DELETE /apiv1/phones/:id 
-//Delete phone by ID
-
+/**
+ * @swagger
+ * /apiv1/phones/{id}:
+ *  delete:
+ *      summary: Delete Phone by ID
+ *      description: Use to delete a phone by ID
+ *      produces:
+ *         - application/json
+ *      parameters:
+ *         - in: path
+ *           name: id
+ *           description: ID of phone
+ *      responses:
+ *       200:
+ *         description: If the operation succeeded
+ *         schema:
+ *         type: json
+ */
 router.delete('/:id', async (req, res, next) => {
   
   try{
@@ -153,5 +228,33 @@ router.delete('/:id', async (req, res, next) => {
     }
 });
 
+
+/**
+ * @swagger
+ * definitions:
+ *  Phone:
+ *      type: object
+ *      properties:
+ *          name:
+ *              type: string
+ *          model:
+ *              type: string
+ *          manufacturer:
+ *              type: string
+ *          detail:
+ *              type: string
+ *          price:
+ *              type: integer
+ *          processor:
+ *              type: string
+ *          color:
+ *              type: string
+ *          ram:
+ *              type: string
+ *          size:
+ *              type: string
+ *          screen:
+ *              type: string
+ */
 
 module.exports = router;
